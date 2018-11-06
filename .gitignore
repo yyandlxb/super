@@ -1,0 +1,14 @@
+.idea
+*.iml
+*.out
+target/
+application.pid
+.classpath
+.project
+.settings/
+bin/
+
+src/main/resources/config/*.properties
+script/config.ini
+
+.editorconfig
