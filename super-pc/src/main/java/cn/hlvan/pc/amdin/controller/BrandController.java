@@ -2,7 +2,7 @@ package cn.hlvan.pc.amdin.controller;
 
 import cn.hlvan.database.tables.records.BrandRecord;
 import cn.hlvan.pc.util.Reply;
-import cn.hlvan.service.BrandService;
+import cn.hlvan.service.admin.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -47,9 +46,14 @@ public class BrandController {
     }
 
     @RequestMapping("/create")
-    public String createBrand(String brandName) {
-        brandService.createBrand(brandName);
-        return "redirect:/admin/brand/index";
+    @ResponseBody
+    public Reply createBrand(String brandName) {
+        boolean brand = brandService.createBrand(brandName);
+        if (brand ){
+            return Reply.success();
+        }else {
+            return Reply.fail();
+        }
 
     }
 
@@ -97,11 +101,16 @@ public class BrandController {
     }
 
     @RequestMapping("/update")
-    public String update(Integer id, String name) {
+    @ResponseBody
+    public Reply update(Integer id, String name) {
         BrandRecord brandRecord = new BrandRecord();
         brandRecord.setName(name);
         brandRecord.setId(id);
-        brandService.update(brandRecord);
-        return "redirect:/admin/brand/index";
+        boolean update = brandService.update(brandRecord);
+        if (update){
+            return Reply.success();
+        }else {
+            return Reply.fail();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package cn.hlvan.service;
+package cn.hlvan.service.admin;
 
 import cn.hlvan.database.tables.records.BrandRecord;
 import org.jooq.DSLContext;
@@ -34,12 +34,12 @@ public class BrandService {
         dsl.update(BRAND).set(BRAND.ENABLED, false).where(BRAND.ID.in(ids)).execute();
     }
 
-    public void update(BrandRecord brandRecord) {
-        dsl.executeUpdate(brandRecord);
+    public boolean update(BrandRecord brandRecord) {
+        return dsl.executeUpdate(brandRecord) >0;
     }
 
     @Transactional
-    public void start(Integer[] brandIds) {
-        dsl.update(BRAND).set(BRAND.ENABLED, true).where(BRAND.ID.in(brandIds)).execute();
+    public boolean start(Integer[] brandIds) {
+        return dsl.update(BRAND).set(BRAND.ENABLED, true).where(BRAND.ID.in(brandIds)).execute()>0;
     }
 }
