@@ -32,6 +32,7 @@ public class BrandController {
     public void setDsl(DSLContext dsl) {
         this.dsl = dsl;
     }
+
     private BrandService brandService;
 
     @Autowired
@@ -40,59 +41,67 @@ public class BrandController {
     }
 
     @RequestMapping("/index")
-    public String indexBrand(){
+    public String indexBrand() {
 
         return "brand";
     }
 
     @RequestMapping("/create")
-    public String createBrand(String brandName){
+    public String createBrand(String brandName) {
         brandService.createBrand(brandName);
         return "redirect:/admin/brand/index";
 
     }
+
     @RequestMapping("/list")
     @ResponseBody
-    public Map listBrand(int start, int length, int draw, HttpServletRequest request){
+    public Map listBrand(int start, int length, int draw, HttpServletRequest request) {
         String parameter = request.getParameter("search[value]");
         List<Condition> conditions = new ArrayList<>();
         if (StringUtils.isNotBlank(parameter))
             conditions.add(BRAND.NAME.contains(parameter));
 
         Integer count = dsl.selectCount().from(BRAND).where(conditions).fetchOneInto(Integer.class);
-        Result<Record> fetch = dsl.select(BRAND.fields()).from(BRAND).where(conditions).limit(start,length).fetch();
+        Result<Record> fetch = dsl.select(BRAND.fields()).from(BRAND).where(conditions).limit(start, length).fetch();
         List<BrandRecord> into = fetch.into(BrandRecord.class);
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        map.put("data",into);
-        map.put("recordsTotal",count);
-        map.put("recordsFiltered",count);
-        map.put("draw",draw);
+        map.put("data", into);
+        map.put("recordsTotal", count);
+        map.put("recordsFiltered", count);
+        map.put("draw", draw);
         return map;
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Reply delete(Integer[] brandIds){
+    public Reply delete(Integer[] brandIds) {
         brandService.delete(brandIds);
+        return Reply.success();
+
+    }
+
+    @RequestMapping("/start")
+    @ResponseBody
+    public Reply start(Integer[] brandIds) {
+        brandService.start(brandIds);
         return Reply.success();
 
     }
 
     @RequestMapping("/detail")
     @ResponseBody
-    public Reply detail(Integer id){
+    public Reply detail(Integer id) {
         BrandRecord brandRecord = dsl.selectFrom(BRAND).where(BRAND.ID.eq(id)).fetchSingle();
         return Reply.success().data(brandRecord);
     }
 
     @RequestMapping("/update")
-    @ResponseBody
-    public Reply update(Integer id, String name){
+    public String update(Integer id, String name) {
         BrandRecord brandRecord = new BrandRecord();
         brandRecord.setName(name);
         brandRecord.setId(id);
         brandService.update(brandRecord);
-        return Reply.success();
+        return "redirect:/admin/brand/index";
     }
 }
