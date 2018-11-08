@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommodityClassify extends TableImpl<CommodityClassifyRecord> {
 
-    private static final long serialVersionUID = 1455229615;
+    private static final long serialVersionUID = -1923688476;
 
     /**
      * The reference instance of <code>super.commodity_classify</code>
@@ -66,9 +66,9 @@ public class CommodityClassify extends TableImpl<CommodityClassifyRecord> {
     public final TableField<CommodityClassifyRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "分类名称");
 
     /**
-     * The column <code>super.commodity_classify.cid</code>. 父分类id
+     * The column <code>super.commodity_classify.p_id</code>. 父分类id
      */
-    public final TableField<CommodityClassifyRecord, Integer> CID = createField("cid", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "父分类id");
+    public final TableField<CommodityClassifyRecord, Integer> P_ID = createField("p_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "父分类id");
 
     /**
      * The column <code>super.commodity_classify.created_at</code>.
@@ -79,6 +79,11 @@ public class CommodityClassify extends TableImpl<CommodityClassifyRecord> {
      * The column <code>super.commodity_classify.updated_at</code>.
      */
     public final TableField<CommodityClassifyRecord, Timestamp> UPDATED_AT = createField("updated_at", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.field("CURRENT_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+
+    /**
+     * The column <code>super.commodity_classify.enabled</code>. 是否可用
+     */
+    public final TableField<CommodityClassifyRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BIT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("b'1'", org.jooq.impl.SQLDataType.BIT)), this, "是否可用");
 
     /**
      * Create a <code>super.commodity_classify</code> table reference
