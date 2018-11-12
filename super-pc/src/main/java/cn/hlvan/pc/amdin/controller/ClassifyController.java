@@ -48,7 +48,7 @@ public class ClassifyController {
 
     @RequestMapping("/create")
     @ResponseBody
-    public Reply create(String name,Integer pId) {
+    public Reply create(@RequestParam String name,Integer pId) {
         boolean b = classifyService.create(name,pId);
         if (b){
             return Reply.success();
