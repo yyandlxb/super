@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-import static cn.hlvan.database.tables.CommodityClassify.COMMODITY_CLASSIFY;
+import static cn.hlvan.database.tables.GoodsClassify.GOODS_CLASSIFY;
 
 @Controller
 @RequestMapping("/admin/classify")
@@ -38,9 +38,9 @@ public class ClassifyController {
     @RequestMapping("/list")
     @ResponseBody
     public List<ClassifyList> list  () {
-        List<ClassifyList> classifyLists = dsl.select(COMMODITY_CLASSIFY.ID, COMMODITY_CLASSIFY.NAME,
-            COMMODITY_CLASSIFY.P_ID.as("pId")).from(COMMODITY_CLASSIFY)
-                                              .where(COMMODITY_CLASSIFY.ENABLED.eq(true))
+        List<ClassifyList> classifyLists = dsl.select(GOODS_CLASSIFY.ID, GOODS_CLASSIFY.NAME,
+            GOODS_CLASSIFY.P_ID.as("pId")).from(GOODS_CLASSIFY)
+                                              .where(GOODS_CLASSIFY.ENABLED.eq(true))
                                               .fetchInto(ClassifyList.class);
         return classifyLists;
 

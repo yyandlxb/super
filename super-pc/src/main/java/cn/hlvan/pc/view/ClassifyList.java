@@ -11,6 +11,8 @@ public class ClassifyList implements java.io.Serializable{
     @JsonProperty("pId")
     private Integer pId;
     private String name;
+    private Boolean nocheck;
+    private Boolean open;
     @JsonIgnore
     public Integer getpId() {
         return pId;
@@ -26,6 +28,8 @@ public class ClassifyList implements java.io.Serializable{
                "id=" + id +
                ", pId=" + pId +
                ", name='" + name + '\'' +
+               ", nocheck=" + nocheck +
+               ", open=" + open +
                '}';
     }
 }

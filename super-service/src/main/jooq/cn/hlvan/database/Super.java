@@ -6,10 +6,10 @@ package cn.hlvan.database;
 
 import cn.hlvan.database.tables.Brand;
 import cn.hlvan.database.tables.BrandClassify;
-import cn.hlvan.database.tables.Commodity;
-import cn.hlvan.database.tables.CommodityClassify;
-import cn.hlvan.database.tables.CommodityStock;
+import cn.hlvan.database.tables.Goods;
+import cn.hlvan.database.tables.GoodsClassify;
 import cn.hlvan.database.tables.Permission;
+import cn.hlvan.database.tables.Product;
 import cn.hlvan.database.tables.Role;
 import cn.hlvan.database.tables.RolePermission;
 import cn.hlvan.database.tables.System;
@@ -40,7 +40,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Super extends SchemaImpl {
 
-    private static final long serialVersionUID = -1350415545;
+    private static final long serialVersionUID = 496597367;
 
     /**
      * The reference instance of <code>super</code>
@@ -58,24 +58,24 @@ public class Super extends SchemaImpl {
     public final BrandClassify BRAND_CLASSIFY = cn.hlvan.database.tables.BrandClassify.BRAND_CLASSIFY;
 
     /**
-     * The table <code>super.commodity</code>.
+     * The table <code>super.goods</code>.
      */
-    public final Commodity COMMODITY = cn.hlvan.database.tables.Commodity.COMMODITY;
+    public final Goods GOODS = cn.hlvan.database.tables.Goods.GOODS;
 
     /**
-     * The table <code>super.commodity_classify</code>.
+     * The table <code>super.goods_classify</code>.
      */
-    public final CommodityClassify COMMODITY_CLASSIFY = cn.hlvan.database.tables.CommodityClassify.COMMODITY_CLASSIFY;
-
-    /**
-     * The table <code>super.commodity_stock</code>.
-     */
-    public final CommodityStock COMMODITY_STOCK = cn.hlvan.database.tables.CommodityStock.COMMODITY_STOCK;
+    public final GoodsClassify GOODS_CLASSIFY = cn.hlvan.database.tables.GoodsClassify.GOODS_CLASSIFY;
 
     /**
      * The table <code>super.permission</code>.
      */
     public final Permission PERMISSION = cn.hlvan.database.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>super.product</code>.
+     */
+    public final Product PRODUCT = cn.hlvan.database.tables.Product.PRODUCT;
 
     /**
      * The table <code>super.role</code>.
@@ -129,10 +129,10 @@ public class Super extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             Brand.BRAND,
             BrandClassify.BRAND_CLASSIFY,
-            Commodity.COMMODITY,
-            CommodityClassify.COMMODITY_CLASSIFY,
-            CommodityStock.COMMODITY_STOCK,
+            Goods.GOODS,
+            GoodsClassify.GOODS_CLASSIFY,
             Permission.PERMISSION,
+            Product.PRODUCT,
             Role.ROLE,
             RolePermission.ROLE_PERMISSION,
             System.SYSTEM,

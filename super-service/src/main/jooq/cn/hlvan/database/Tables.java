@@ -6,10 +6,10 @@ package cn.hlvan.database;
 
 import cn.hlvan.database.tables.Brand;
 import cn.hlvan.database.tables.BrandClassify;
-import cn.hlvan.database.tables.Commodity;
-import cn.hlvan.database.tables.CommodityClassify;
-import cn.hlvan.database.tables.CommodityStock;
+import cn.hlvan.database.tables.Goods;
+import cn.hlvan.database.tables.GoodsClassify;
 import cn.hlvan.database.tables.Permission;
+import cn.hlvan.database.tables.Product;
 import cn.hlvan.database.tables.Role;
 import cn.hlvan.database.tables.RolePermission;
 import cn.hlvan.database.tables.System;
@@ -43,24 +43,24 @@ public class Tables {
     public static final BrandClassify BRAND_CLASSIFY = cn.hlvan.database.tables.BrandClassify.BRAND_CLASSIFY;
 
     /**
-     * The table <code>super.commodity</code>.
+     * The table <code>super.goods</code>.
      */
-    public static final Commodity COMMODITY = cn.hlvan.database.tables.Commodity.COMMODITY;
+    public static final Goods GOODS = cn.hlvan.database.tables.Goods.GOODS;
 
     /**
-     * The table <code>super.commodity_classify</code>.
+     * The table <code>super.goods_classify</code>.
      */
-    public static final CommodityClassify COMMODITY_CLASSIFY = cn.hlvan.database.tables.CommodityClassify.COMMODITY_CLASSIFY;
-
-    /**
-     * The table <code>super.commodity_stock</code>.
-     */
-    public static final CommodityStock COMMODITY_STOCK = cn.hlvan.database.tables.CommodityStock.COMMODITY_STOCK;
+    public static final GoodsClassify GOODS_CLASSIFY = cn.hlvan.database.tables.GoodsClassify.GOODS_CLASSIFY;
 
     /**
      * The table <code>super.permission</code>.
      */
     public static final Permission PERMISSION = cn.hlvan.database.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>super.product</code>.
+     */
+    public static final Product PRODUCT = cn.hlvan.database.tables.Product.PRODUCT;
 
     /**
      * The table <code>super.role</code>.

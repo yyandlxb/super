@@ -9,13 +9,13 @@
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" type="image/png" href="/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <script src="/assets/js/echarts.min.js"></script>
-    <link rel="stylesheet" href="/assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="/assets/css/amazeui.datatables.min.css" />
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="/assets/css/amazeui.datatables.min.css"/>
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="stylesheet" href="/assets/css/zTreeStyle.css">
     <script src="/assets/js/jquery.min.js"></script>
@@ -220,7 +220,7 @@
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="am-modal-bd">
-            <form class="am-form" >
+            <form class="am-form">
                 <div class="am-form-group">
                     <div class="col-sm-10">
                         <input type="text" id="classify-name" name="name" placeholder="输入父节点"/>
@@ -245,18 +245,23 @@
     function showAdd() {
         $('#add-tree').modal('open');
     }
+
     function addClassify() {
         var name = $("#classify-name").val();
         $.ajax({
             type: "post",
             url: "/admin/classify/create",
-            data: {"name": name,"pId":0},
+            data: {"name": name, "pId": 0},
             success: function (data) {
                 console.log(data.state.stateCode)
                 if (data.state.stateCode == 0) {
                     window.location.reload();
-                }else {
-                    AMUI.dialog.alert({ title: '错误提示', content: '添加失败，节点已存在', onConfirm: function() { console.log('close'); } });
+                } else {
+                    AMUI.dialog.alert({
+                        title: '错误提示', content: '添加失败，节点已存在', onConfirm: function () {
+                            console.log('close');
+                        }
+                    });
                 }
 
             }
@@ -291,51 +296,60 @@
     };
 
     var log, className = "dark";
+
     function beforeDrag(treeId, treeNodes) {
         return false;
     }
+
     function beforeEditName(treeId, treeNode) {
-        className = (className === "dark" ? "":"dark");
-        showLog("[ "+getTime()+" beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        className = (className === "dark" ? "" : "dark");
+        showLog("[ " + getTime() + " beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
         zTree.selectNode(treeNode);
-        setTimeout(function() {
-            if (confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？")) {
-                setTimeout(function() {
-                    zTree.editName(treeNode);
-                }, 0);
-            }
+        setTimeout(function () {
+            zTree.editName(treeNode);
+            // if (confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？")) {
+            //     setTimeout(function () {
+            //     }, 0);
+            // }
         }, 0);
         return false;
     }
+
     function beforeRemove(treeId, treeNode) {
-        className = (className === "dark" ? "":"dark");
-        showLog("[ "+getTime()+" beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        className = (className === "dark" ? "" : "dark");
+        showLog("[ " + getTime() + " beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
         zTree.selectNode(treeNode);
         return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
     }
+
     function onRemove(e, treeId, treeNode) {
-        showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+        showLog("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
         $.ajax({
             type: "get",
             url: "/admin/classify/delete",
-            data: {"id":treeNode.id,"name":treeNode.name},
+            data: {"id": treeNode.id, "name": treeNode.name},
             success: function (data) {
                 if (data.state.stateCode == 0) {
                     window.location.reload();
-                }else {
-                    AMUI.dialog.alert({ title: '错误提示', content: '删除失败', onConfirm: function() { console.log('close'); } });
+                } else {
+                    AMUI.dialog.alert({
+                        title: '错误提示', content: '删除失败', onConfirm: function () {
+                            console.log('close');
+                        }
+                    });
                 }
             }
         });
 
     }
+
     function beforeRename(treeId, treeNode, newName, isCancel) {
-        className = (className === "dark" ? "":"dark");
-        showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
+        className = (className === "dark" ? "" : "dark");
+        showLog((isCancel ? "<span style='color:red'>" : "") + "[ " + getTime() + " beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>" : ""));
         if (newName.length == 0) {
-            setTimeout(function() {
+            setTimeout(function () {
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 zTree.cancelEditName();
                 alert("节点名称不能为空.");
@@ -344,21 +358,26 @@
         }
         return true;
     }
+
     function onRename(e, treeId, treeNode, isCancel) {
         // showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
-        if (treeNode.pId == null){
+        if (treeNode.pId == null) {
             treeNode.pId = 0;
         }
-        if (treeNode.id == null){
+        if (treeNode.id == null) {
             $.ajax({
                 type: "get",
                 url: "/admin/classify/create",
-                data: {"pId":treeNode.pId,"name":treeNode.name,"id":treeNode.id},
+                data: {"pId": treeNode.pId, "name": treeNode.name, "id": treeNode.id},
                 success: function (data) {
                     if (data.state.stateCode == 0) {
                         window.location.reload();
-                    }else {
-                        AMUI.dialog.alert({ title: '错误提示', content: '添加失败', onConfirm: function() { console.log('close'); } });
+                    } else {
+                        AMUI.dialog.alert({
+                            title: '错误提示', content: '添加失败', onConfirm: function () {
+                                console.log('close');
+                            }
+                        });
                     }
                 }
             });
@@ -366,62 +385,65 @@
             $.ajax({
                 type: "get",
                 url: "/admin/classify/update",
-                data: {"name":treeNode.name,"id":treeNode.id},
+                data: {"name": treeNode.name, "id": treeNode.id},
                 success: function (data) {
                     if (data.state.stateCode == 0) {
                         window.location.reload();
-                    }else {
-                        AMUI.dialog.alert({ title: '错误提示', content: '更新失败', onConfirm: function() { console.log('close'); } });
+                    } else {
+                        AMUI.dialog.alert({
+                            title: '错误提示', content: '更新失败', onConfirm: function () {
+                                console.log('close');
+                            }
+                        });
                     }
                 }
             });
         }
     }
-    /*function showRemoveBtn(treeId, treeNode) {
-        return !treeNode.isFirstNode;
-    }
-    function showRenameBtn(treeId, treeNode) {
-        return !treeNode.isLastNode;
-    }*/
+
     function showLog(str) {
         if (!log) log = $("#log");
-        log.append("<li class='"+className+"'>"+str+"</li>");
-        if(log.children("li").length > 8) {
+        log.append("<li class='" + className + "'>" + str + "</li>");
+        if (log.children("li").length > 8) {
             log.get(0).removeChild(log.children("li")[0]);
         }
     }
+
     function getTime() {
-        var now= new Date(),
-            h=now.getHours(),
-            m=now.getMinutes(),
-            s=now.getSeconds(),
-            ms=now.getMilliseconds();
-        return (h+":"+m+":"+s+ " " +ms);
+        var now = new Date(),
+            h = now.getHours(),
+            m = now.getMinutes(),
+            s = now.getSeconds(),
+            ms = now.getMilliseconds();
+        return (h + ":" + m + ":" + s + " " + ms);
     }
 
     var newCount = 1;
+
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
-        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
         var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
             + "' title='add node' onfocus='this.blur();'></span>";
         sObj.after(addStr);
-        var btn = $("#addBtn_"+treeNode.tId);
-        if (btn) btn.bind("click", function(){
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-            zTree.addNodes(treeNode, {id:null, pId:treeNode.id, name:"new node" + (newCount++)});
+            zTree.addNodes(treeNode, {id: null, pId: treeNode.id, name: "new node" + (newCount++)});
             return false;
         });
     };
+
     function removeHoverDom(treeId, treeNode) {
-        $("#addBtn_"+treeNode.tId).unbind().remove();
+        $("#addBtn_" + treeNode.tId).unbind().remove();
     };
+
     function selectAll() {
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-        zTree.setting.edit.editNameSelectAll =  $("#selectAll").attr("checked");
+        zTree.setting.edit.editNameSelectAll = $("#selectAll").attr("checked");
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $.ajax({
             type: "get",
             url: "/admin/classify/list",
@@ -436,7 +458,13 @@
     //-->
 </SCRIPT>
 <style type="text/css">
-    .ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+    .ztree li span.button.add {
+        margin-left: 2px;
+        margin-right: -1px;
+        background-position: -144px 0;
+        vertical-align: top;
+        *vertical-align: middle
+    }
 </style>
 
 </html>

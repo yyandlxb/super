@@ -28,11 +28,11 @@ CREATE TABLE `brand` (
   `enabled` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 /*Data for the table `brand` */
 
-insert  into `brand`(`id`,`name`,`created_at`,`updated_at`,`enabled`) values (2,'双汇','2018-10-24 14:43:32','2018-10-24 14:43:32',''),(9,'4455','2018-10-24 18:53:59','2018-10-24 18:53:59',''),(10,'6543','2018-10-24 18:54:02','2018-10-24 18:54:02',''),(11,'我去','2018-10-24 18:54:08','2018-10-24 18:54:08','');
+insert  into `brand`(`id`,`name`,`created_at`,`updated_at`,`enabled`) values (2,'双汇77','2018-10-24 14:43:32','2018-11-07 10:51:06',''),(9,'4455','2018-10-24 18:53:59','2018-10-24 18:53:59',''),(10,'6543','2018-10-24 18:54:02','2018-11-07 11:36:31',''),(11,'我去','2018-10-24 18:54:08','2018-11-07 11:36:31',''),(14,'333','2018-11-07 10:57:56','2018-11-07 11:36:31',''),(16,'双汇234','2018-11-07 10:58:06','2018-11-07 11:02:24','\0'),(17,'双汇23','2018-11-07 18:25:39','2018-11-07 18:25:39','');
 
 /*Table structure for table `brand_classify` */
 
@@ -48,11 +48,11 @@ CREATE TABLE `brand_classify` (
 
 /*Data for the table `brand_classify` */
 
-/*Table structure for table `commodity` */
+/*Table structure for table `goods` */
 
-DROP TABLE IF EXISTS `commodity`;
+DROP TABLE IF EXISTS `goods`;
 
-CREATE TABLE `commodity` (
+CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品id',
   `name` varchar(50) NOT NULL COMMENT '商品名称',
   `commodity_classify_id` int(11) NOT NULL COMMENT '分类id',
@@ -64,47 +64,34 @@ CREATE TABLE `commodity` (
   `merchant_id` int(11) NOT NULL COMMENT '供应商id',
   `sale_total` int(9) DEFAULT NULL COMMENT '销售量',
   `details` text NOT NULL COMMENT '商品详情',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-待审核，1-审核成功，2-审核失败',
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品价格',
+  `producer` varchar(100) NOT NULL COMMENT '生产厂商',
+  `weight` double NOT NULL COMMENT '重量',
+  `cost_price` decimal(10,0) NOT NULL DEFAULT '10' COMMENT '进货价',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `commodity` */
+/*Data for the table `goods` */
 
-/*Table structure for table `commodity_classify` */
+/*Table structure for table `goods_classify` */
 
-DROP TABLE IF EXISTS `commodity_classify`;
+DROP TABLE IF EXISTS `goods_classify`;
 
-CREATE TABLE `commodity_classify` (
+CREATE TABLE `goods_classify` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品分类',
   `name` varchar(50) NOT NULL COMMENT '分类名称',
-  `cid` int(11) NOT NULL COMMENT '父分类id',
+  `p_id` int(11) NOT NULL COMMENT '父分类id',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `enabled` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否可用',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
-/*Data for the table `commodity_classify` */
+/*Data for the table `goods_classify` */
 
-/*Table structure for table `commodity_stock` */
-
-DROP TABLE IF EXISTS `commodity_stock`;
-
-CREATE TABLE `commodity_stock` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品库存',
-  `enabled` bit(1) NOT NULL DEFAULT b'1' COMMENT '0-上架，1-下架',
-  `picture` varchar(255) DEFAULT NULL COMMENT '商品图片',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `price` decimal(10,2) NOT NULL COMMENT '商品价格',
-  `pass_time` timestamp NULL DEFAULT NULL COMMENT '过期时间',
-  `attribute` varchar(500) DEFAULT NULL COMMENT '规格',
-  `commodity_id` int(11) NOT NULL COMMENT '商品id',
-  `discount_price` decimal(10,2) DEFAULT NULL COMMENT '优惠价',
-  `total` int(11) NOT NULL DEFAULT '0' COMMENT '库存',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-/*Data for the table `commodity_stock` */
+insert  into `goods_classify`(`id`,`name`,`p_id`,`created_at`,`updated_at`,`enabled`) values (2,'hl',0,'2018-11-07 19:08:47','2018-11-08 19:04:42','\0'),(3,'ggg',2,'2018-11-08 18:13:59','2018-11-08 19:04:42','\0'),(4,'hh',0,'2018-11-08 18:14:07','2018-11-08 19:04:29',''),(7,'aYao',0,'2018-11-08 18:26:07','2018-11-08 18:26:07',''),(10,'双汇77',0,'2018-11-08 18:37:13','2018-11-08 19:04:29',''),(11,'goku2017',0,'2018-11-08 19:04:50','2018-11-15 18:29:59','\0'),(13,'ddd',11,'2018-11-09 15:14:23','2018-11-09 15:18:31','\0'),(14,'ffff',13,'2018-11-09 15:14:48','2018-11-09 15:18:25','\0'),(15,'fffddd',11,'2018-11-09 15:15:02','2018-11-09 15:23:08','\0'),(17,'555',7,'2018-11-09 15:31:11','2018-11-15 18:30:52',''),(18,'双汇234',0,'2018-11-15 18:31:09','2018-11-15 18:31:09',''),(20,'vvvvlll',7,'2018-11-15 18:31:35','2018-11-15 18:35:40',''),(21,'lkfldklfk',20,'2018-11-15 18:52:36','2018-11-15 18:52:36','');
 
 /*Table structure for table `permission` */
 
@@ -123,6 +110,24 @@ CREATE TABLE `permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `permission` */
+
+/*Table structure for table `product` */
+
+DROP TABLE IF EXISTS `product`;
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品库存',
+  `product_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '产品id',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `pass_time` timestamp NULL DEFAULT NULL COMMENT '过期时间',
+  `commodity_id` int(11) NOT NULL COMMENT '商品id',
+  `product_date` timestamp NULL DEFAULT NULL COMMENT '生产日期',
+  `status` tinyint(1) DEFAULT NULL COMMENT '0-待出售，1-已售出，2-已过期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `product` */
 
 /*Table structure for table `role` */
 
