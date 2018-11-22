@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Goods extends TableImpl<GoodsRecord> {
 
-    private static final long serialVersionUID = -1884433594;
+    private static final long serialVersionUID = 1572619919;
 
     /**
      * The reference instance of <code>super.goods</code>
@@ -67,9 +67,9 @@ public class Goods extends TableImpl<GoodsRecord> {
     public final TableField<GoodsRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "商品名称");
 
     /**
-     * The column <code>super.goods.commodity_classify_id</code>. 分类id
+     * The column <code>super.goods.classify_id</code>. 分类id
      */
-    public final TableField<GoodsRecord, Integer> COMMODITY_CLASSIFY_ID = createField("commodity_classify_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "分类id");
+    public final TableField<GoodsRecord, Integer> CLASSIFY_ID = createField("classify_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "分类id");
 
     /**
      * The column <code>super.goods.describe</code>. 商品简介
@@ -130,6 +130,16 @@ public class Goods extends TableImpl<GoodsRecord> {
      * The column <code>super.goods.weight</code>. 重量
      */
     public final TableField<GoodsRecord, Double> WEIGHT = createField("weight", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "重量");
+
+    /**
+     * The column <code>super.goods.cost_price</code>. 进货价
+     */
+    public final TableField<GoodsRecord, Long> COST_PRICE = createField("cost_price", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("10", org.jooq.impl.SQLDataType.BIGINT)), this, "进货价");
+
+    /**
+     * The column <code>super.goods.brand_id</code>.
+     */
+    public final TableField<GoodsRecord, Integer> BRAND_ID = createField("brand_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * Create a <code>super.goods</code> table reference

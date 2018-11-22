@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Product extends TableImpl<ProductRecord> {
 
-    private static final long serialVersionUID = 936339463;
+    private static final long serialVersionUID = -1103930704;
 
     /**
      * The reference instance of <code>super.product</code>
@@ -94,6 +94,11 @@ public class Product extends TableImpl<ProductRecord> {
      * The column <code>super.product.status</code>. 0-待出售，1-已售出，2-已过期
      */
     public final TableField<ProductRecord, Byte> STATUS = createField("status", org.jooq.impl.SQLDataType.TINYINT, this, "0-待出售，1-已售出，2-已过期");
+
+    /**
+     * The column <code>super.product.batch_code</code>. 批次号
+     */
+    public final TableField<ProductRecord, String> BATCH_CODE = createField("batch_code", org.jooq.impl.SQLDataType.VARCHAR(50), this, "批次号");
 
     /**
      * Create a <code>super.product</code> table reference
