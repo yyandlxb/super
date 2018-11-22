@@ -55,24 +55,27 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品id',
   `name` varchar(50) NOT NULL COMMENT '商品名称',
-  `commodity_classify_id` int(11) NOT NULL COMMENT '分类id',
+  `classify_id` int(11) NOT NULL COMMENT '分类id',
   `describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品简介',
   `enabled` bit(1) NOT NULL DEFAULT b'1' COMMENT '0-上架，1-下架',
   `picture` varchar(255) DEFAULT NULL COMMENT '商品图片',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `merchant_id` int(11) NOT NULL COMMENT '供应商id',
+  `merchant_id` int(11) DEFAULT NULL COMMENT '供应商id',
   `sale_total` int(9) DEFAULT NULL COMMENT '销售量',
-  `details` text NOT NULL COMMENT '商品详情',
+  `details` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '审核结果',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-待审核，1-审核成功，2-审核失败',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '商品价格',
   `producer` varchar(100) NOT NULL COMMENT '生产厂商',
   `weight` double NOT NULL COMMENT '重量',
   `cost_price` decimal(10,0) NOT NULL DEFAULT '10' COMMENT '进货价',
+  `brand_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `goods` */
+
+insert  into `goods`(`id`,`name`,`classify_id`,`describe`,`enabled`,`picture`,`created_at`,`updated_at`,`merchant_id`,`sale_total`,`details`,`status`,`price`,`producer`,`weight`,`cost_price`,`brand_id`) values (2,'aYao',555,'555','','15427068600302345_image_file_copy_32.jpg','2018-11-20 17:41:07','2018-11-21 15:26:27',NULL,NULL,NULL,0,'12.00','555',5,'55',2),(3,'aYao',17,'3','','15427085252062345_image_file_copy_32.jpg','2018-11-20 18:08:59','2018-11-21 15:26:33',NULL,NULL,NULL,0,'12.00','3333',4,'4',9),(4,'aYao',21,'4','','15427087399952345_image_file_copy_31.jpg','2018-11-20 18:12:28','2018-11-21 15:26:38',NULL,NULL,NULL,0,'12.00','3333',4,'4',2);
 
 /*Table structure for table `goods_classify` */
 
@@ -124,6 +127,7 @@ CREATE TABLE `product` (
   `commodity_id` int(11) NOT NULL COMMENT '商品id',
   `product_date` timestamp NULL DEFAULT NULL COMMENT '生产日期',
   `status` tinyint(1) DEFAULT NULL COMMENT '0-待出售，1-已售出，2-已过期',
+  `batch_code` varchar(50) DEFAULT NULL COMMENT '批次号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
