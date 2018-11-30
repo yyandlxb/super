@@ -1,23 +1,21 @@
 package cn.hlvan.pc.amdin.controller;
 
 import cn.hlvan.database.tables.records.BrandRecord;
+import cn.hlvan.pc.util.Page;
 import cn.hlvan.pc.util.Reply;
 import cn.hlvan.service.admin.BrandService;
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static cn.hlvan.database.Tables.BRAND;
 
@@ -47,8 +45,8 @@ public class BrandController {
 
     @RequestMapping("/create")
     @ResponseBody
-    public Reply createBrand(String brandName) {
-        boolean brand = brandService.createBrand(brandName);
+    public Reply createBrand(String name) {
+        boolean brand = brandService.createBrand(name);
         if (brand ){
             return Reply.success();
         }else {
@@ -59,37 +57,27 @@ public class BrandController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public Map listBrand(int start, int length, int draw, HttpServletRequest request) {
-        String parameter = request.getParameter("search[value]");
+    public Reply listBrand(Pageable pageable,String name) {
         List<Condition> conditions = new ArrayList<>();
-        if (StringUtils.isNotBlank(parameter))
-            conditions.add(BRAND.NAME.contains(parameter));
+        if (StringUtils.isNotBlank(name))
+            conditions.add(BRAND.NAME.contains(name));
 
-        Integer count = dsl.selectCount().from(BRAND).where(conditions).fetchOneInto(Integer.class);
-        Result<Record> fetch = dsl.select(BRAND.fields()).from(BRAND).where(conditions).limit(start, length).fetch();
-        List<BrandRecord> into = fetch.into(BrandRecord.class);
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("data", into);
-        map.put("recordsTotal", count);
-        map.put("recordsFiltered", count);
-        map.put("draw", draw);
-        return map;
+        Integer total = dsl.selectCount().from(BRAND).where(conditions).fetchOne().value1();
+        List<BrandRecord> fetch = dsl.select(BRAND.fields()).from(BRAND).where(conditions)
+                                     .limit((int) pageable.getOffset(), pageable.getPageSize())
+                                     .fetchInto(BrandRecord.class);
+        return Reply.success().data(new Page<>(fetch, pageable, total));
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Reply delete(Integer[] brandIds) {
-        brandService.delete(brandIds);
-        return Reply.success();
-
-    }
-
-    @RequestMapping("/start")
-    @ResponseBody
-    public Reply start(Integer[] brandIds) {
-        brandService.start(brandIds);
-        return Reply.success();
+    public Reply delete(Integer id,Boolean status) {
+        Boolean delete = brandService.delete(id, status);
+        if (delete){
+            return Reply.success();
+        }else {
+            return Reply.fail();
+        }
 
     }
 

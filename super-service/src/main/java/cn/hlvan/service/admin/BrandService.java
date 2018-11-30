@@ -29,17 +29,12 @@ public class BrandService {
     }
 
     @Transactional
-    public void delete(Integer[] ids) {
+    public Boolean delete(Integer id,Boolean status) {
 
-        dsl.update(BRAND).set(BRAND.ENABLED, false).where(BRAND.ID.in(ids)).execute();
+        return  dsl.update(BRAND).set(BRAND.ENABLED, status).where(BRAND.ID.eq(id)).execute() > 0;
     }
 
     public boolean update(BrandRecord brandRecord) {
         return dsl.executeUpdate(brandRecord) >0;
-    }
-
-    @Transactional
-    public boolean start(Integer[] brandIds) {
-        return dsl.update(BRAND).set(BRAND.ENABLED, true).where(BRAND.ID.in(brandIds)).execute()>0;
     }
 }
